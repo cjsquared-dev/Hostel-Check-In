@@ -5,10 +5,16 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({
     req,
     secret: process.env.AUTH_SECRET,
-    secureCookie: process.env.ENVIRONMENT === "production" ? true : false,
+    secureCookie: process.env.ENVIRONMENT === "production" ? true : false
+
+    
   });
 
   console.log("Token:", token);
+  console.log("Environment:", process.env.ENVIRONMENT);
+  console.log("Secure Cookie:", process.env.ENVIRONMENT === "production" ? true : false);
+
+
 
   // Allow the seed page to be accessed without authentication
   if (req.nextUrl.pathname.startsWith("/seed")) {
