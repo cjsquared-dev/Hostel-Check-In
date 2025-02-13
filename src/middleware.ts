@@ -8,6 +8,8 @@ export async function middleware(req: NextRequest) {
     secureCookie: process.env.ENVIRONMENT === "production" ? true : false,
   });
 
+  console.log("Token:", token);
+
   // Allow the seed page to be accessed without authentication
   if (req.nextUrl.pathname.startsWith("/seed")) {
     return NextResponse.next();
@@ -22,6 +24,7 @@ export async function middleware(req: NextRequest) {
   if (token && token.userId) {
     const response = NextResponse.next();
     response.headers.set("x-user-id", String(token.userId));
+    console.log("User ID set in headers:", token.userId);
     return response;
   }
 
