@@ -5,6 +5,7 @@ import { dbConnect } from "@/lib/db";
 import { User } from "@/models/index";
 import { IUser } from "@/interfaces/index";
 import { IState } from "@/mytypes/index";
+import { redirect } from "next/navigation";
 
 // GET DATA
 
@@ -32,7 +33,6 @@ export async function getTenants() {
 
 export async function getTenantById(id: string) {
   await dbConnect();
-
   // FIXME: Identify why the booking history for 'Alice Smith' is populating with the 'tenant' history on the tenant/{id} page
   const tenant = await User.findOne({ _id: id, role: "tenant" })
     .populate("fullname")
@@ -75,7 +75,9 @@ export async function getTenantById(id: string) {
     );
 
   if (!tenant) {
-    throw new Error("Tenant not found");
+    console.log(id)
+    console.log("Tenant not found, redirecting to /tenants");
+    redirect("/tenants");
   }
 
   const tenantObj = JSON.parse(JSON.stringify(tenant.toObject()));
