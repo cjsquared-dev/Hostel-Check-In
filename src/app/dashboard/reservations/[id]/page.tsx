@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 // import { headers } from "next/headers"
 import { getBookingById } from "@/actions/booking.actions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 // Define the Reservation interface
 interface BookedBy {
@@ -67,7 +68,7 @@ interface Reservation {
 export default function Page() {
   // get book id from url params
   const { id } = useParams();
-
+  const router = useRouter();
   const [reservation, setReservation] = useState<Reservation | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -133,6 +134,10 @@ export default function Page() {
     return <div>No reservation found</div>;
   }
 
+  function handleBackToReservations() {
+    router.push("/dashboard/reservations");
+  }
+
   return (
     <div className="page">
       <div className="w-full">
@@ -156,6 +161,12 @@ export default function Page() {
               <div className="flex space-x-4">
                 <Button onClick={handleAddBookingAndPayment}>Check-out</Button>
                 <Button>Extend Stay</Button>
+                <Button
+                onClick={handleBackToReservations}
+                className="submit-button hover:bg-blue-500 hover:text-white"
+              >
+                {"< Back to Reservations"}
+              </Button>
               </div>
             </div>
             <Separator className="my-4" />

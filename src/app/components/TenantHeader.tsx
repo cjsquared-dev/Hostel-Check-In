@@ -1,6 +1,7 @@
 "use client";
 import { Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const TenantHeader = ({ tenant, handleDeleteTenant }: any) => {
   const router = useRouter();
@@ -10,6 +11,11 @@ const TenantHeader = ({ tenant, handleDeleteTenant }: any) => {
     const tenantId = tenant.id;
     console.log(tenant);
     router.push(`/dashboard/tenants/${tenantId}/edit`);
+  }
+
+  function navigateToTenants() {
+    // navigate to tenant page
+    router.push(`/dashboard/tenants/`);
   }
 
   function deleteTenant() {
@@ -28,6 +34,12 @@ const TenantHeader = ({ tenant, handleDeleteTenant }: any) => {
             onClick={navigateToEdit}
             className="text-[var(--text)] edit"
           />
+          <Button
+            onClick={navigateToTenants}
+            className="mt-[20px] submit-button hover:bg-blue-500 hover:text-white"
+          >
+            {"< Back to Tenants"}
+          </Button>
         </div>
         <div>
           <Trash2 onClick={deleteTenant} className="text-[var(--text)] trash" />
