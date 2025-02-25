@@ -26,4 +26,12 @@ export const authConfig: NextAuthConfig = {
   },
   providers: [], // Add providers with an empty array for now
   trustHost: true, // Add this line to trust the host
+  session: {
+    strategy: "jwt",
+    maxAge: 3 * 60 * 60, // 3 hours 
+  },
+  jwt: {
+    maxAge: 3 * 60 * 60, // 3 hours
+  },
+  secret: process.env.AUTH_SECRET,
 } satisfies NextAuthConfig;

@@ -19,7 +19,6 @@ import { User } from "@/models/User.model"; // Ensure this path is correct
 import bcrypt from "bcrypt";
 import type { JWT } from "next-auth/jwt";
 import type { Session } from "next-auth";
-import type { AdapterUser } from "next-auth/adapters";
 
 // Get a user using their email address
 async function getUserByEmail(email: string): Promise<IUser | undefined> {
