@@ -300,6 +300,40 @@ const roomsData = [
 		size: 2,
 		occupants: [],
 	},
+
+	{
+		roomType: "private",
+		roomNumber: "105",
+		status: "available",
+		costPerDay: 50.0,
+		deposit: 100.0,
+		name: "Room 105",
+		size: 1,
+		occupants: [],
+	},
+	
+	{
+		roomType: "private",
+		roomNumber: "106",
+		status: "available",
+		costPerDay: 50.0,
+		deposit: 100.0,
+		name: "Room 106",
+		size: 1,
+		occupants: [],
+	},
+
+	{
+		roomType: "private",
+		roomNumber: "107",
+		status: "available",
+		costPerDay: 50.0,
+		deposit: 100.0,
+		name: "Room 107",
+		size: 1,
+		occupants: [],
+	}
+
 ]
 
 // Bookings data

@@ -1,5 +1,5 @@
 // Custom types for interfaces and schemas
-export type IRoomType = "shared" | "single" | "double" | "suite"
+export type IRoomType = "shared" | "single" | "double" | "suite" | "private"
 
 export type IRoomStatus = "available" | "occupied" | "maintenance" | "cleaning"
 

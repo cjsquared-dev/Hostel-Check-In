@@ -137,12 +137,14 @@ async function seedPaymentMethods(admin: IUser, users: IUser[]) {
 async function seedRooms(users: IUser[]) {
 	const insertedRooms = await Promise.all(
 		roomsData.map(async (room, i) => {
-			const newRoom = new Room(room)
-			newRoom.occupants.push(users[i].id)
-			return newRoom.save()
+		  const newRoom = new Room(room);
+		  if (users[i]) {
+			newRoom.occupants.push(users[i].id);
+		  }
+		  return newRoom.save();
 		})
-	)
-
+	  );
+	  
 	const formatedRooms = await Promise.all(
 		insertedRooms.map(async (room) => {
 			const populatedRoom = await Room.findOne({ _id: room._id })

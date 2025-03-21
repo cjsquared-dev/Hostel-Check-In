@@ -26,6 +26,22 @@ export async function getRoomById(roomId: string) {
 	return roomObj
 }
 
+// Function to get the number of occupied rooms
+export async function getOccupiedRoomsCount() {
+	await dbConnect();
+  
+	const occupiedRoomsCount = await Room.countDocuments({ status: "occupied" });
+  
+	return occupiedRoomsCount;
+  }
+
+// Function to get the number of vacant rooms
+export async function getVacantRoomsCount() {
+	await dbConnect();
+	const vacantRoomsCount = await Room.countDocuments({ status: "available" });
+	return vacantRoomsCount;
+}
+
 //SET DATA
 
 export async function createRoom(payload: IRoom) {
@@ -101,3 +117,5 @@ export async function updateRoom(roomId: string, payload: IRoom) {
 	// Object.assign(room, data) // TODO: Test this funcitonality effeciently updating the room object.
 	return room.toObject()
 }
+
+

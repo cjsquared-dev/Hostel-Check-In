@@ -6,7 +6,7 @@ export const roomSchema = new Schema<IRoom>(
 	{
 		roomType: {
 			type: String,
-			enum: ["shared", "single", "double", "suite"],
+			enum: ["shared", "single", "double", "suite", "private"],
 			required: [true, "Room type is required"],
 		},
 		roomNumber: {
@@ -51,7 +51,7 @@ export const roomSchema = new Schema<IRoom>(
 		occupants: {
 			type: [String], // Array of User IDs (uuid v4)
 			ref: "User",
-			required: true,
+			// required: true, "Commenting out required to allow for empty array"
 			default: [],
 			validate: {
 				validator: function (this: IRoom) {

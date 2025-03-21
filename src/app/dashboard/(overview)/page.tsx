@@ -1,6 +1,7 @@
 import React from "react"
 import "@/styles/global.css"
 import { getTenants } from "@/actions/tenant.actions"
+import { getVacantRoomsCount, getOccupiedRoomsCount } from "@/actions/room.actions"
 import { BedDouble, CircleSlash2, CalendarCheck2 } from "lucide-react"
 import { Card, CardContent, CardTitle } from "@/components/ui/card"
 import {
@@ -15,6 +16,8 @@ import {
 
 export default async function Page() {
 	const tenants = await getTenants()
+	const occupiedRoomsCount = await getOccupiedRoomsCount();
+	const vacantRoomsCount = await getVacantRoomsCount();
 
 	function convertTenantIntoTableData(tenants: any) {
 		return tenants.map((tenant: any) => {
@@ -52,7 +55,7 @@ export default async function Page() {
 						<div>
 							<div>
 								<h3>Occupied Rooms</h3>
-								<h1 className="text-[42px]">12</h1>
+								<h1 className="text-[42px]">{occupiedRoomsCount}</h1>
 							</div>
 							<div className="progress"></div>
 						</div>
@@ -69,7 +72,7 @@ export default async function Page() {
 						<div>
 							<div>
 								<h3>Vacant Rooms</h3>
-								<h1 className="text-[42px]">44</h1>
+								<h1 className="text-[42px]">{vacantRoomsCount}</h1>
 							</div>
 							<div className="progress"></div>
 						</div>

@@ -158,3 +158,17 @@ export async function addBookingAndPayment(data: BookingData, userId: string) {
 		throw new Error(`Failed to create booking and payment: ${String(error)}`)
 	}
 }
+
+// function to checkout a tenant from a room that they are currently occupying
+export async function checkoutTenant(bookingId: string) {
+	await dbConnect()
+
+	const booking = await Booking.findById(bookingId)
+	if (!booking) {
+		throw new Error("Booking not found")
+	} else {
+		booking.status = "checked-out"
+		await booking.save()
+		return booking.toObject()
+	}
+}
