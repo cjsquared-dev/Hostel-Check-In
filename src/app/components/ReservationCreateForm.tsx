@@ -147,7 +147,7 @@ const ReservationCreateForm: React.FC<ReservationCreateFormProps> = ({
       const totalPerDay = 100;
       setFormValue("total", (duration * totalPerDay).toString());
     }
-  }, [dateRange]);
+  }, [dateRange, setFormValue]);
 
   return (
     <>
