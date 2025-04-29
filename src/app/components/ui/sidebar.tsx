@@ -177,7 +177,10 @@ const Sidebar = React.forwardRef<
   ) => {
     const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
 
-    if (collapsible === "none") {
+        // Dynamically set collapsible to "none" on mobile
+        const effectiveCollapsible = isMobile ? "none" : collapsible;
+
+    if (effectiveCollapsible === "none") {
       return (
         <div
           className={cn(
