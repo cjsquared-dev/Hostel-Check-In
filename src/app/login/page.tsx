@@ -57,7 +57,7 @@ function LoginSuspense() {
     <>
       <div id="grad">
         <div id="text" className=" flex items-center justify-center h-screen">
-          <Tabs defaultValue="register" id="text" className="w-[400px] text">
+          <Tabs defaultValue="login" id="text" className="w-[400px] text">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger id="text" value="register">
                 Register
