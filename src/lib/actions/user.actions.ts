@@ -47,10 +47,15 @@ export async function registerUser(
     return { error: true, message: "Please fill in all fields" };
   }
 
-  if (password.length < 6) {
+  // Password complexity requirements
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  if (!passwordRegex.test(password)) {
     return {
       error: true,
-      message: "Password must be at least 6 characters long",
+      message:
+        "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.",
     };
   }
 

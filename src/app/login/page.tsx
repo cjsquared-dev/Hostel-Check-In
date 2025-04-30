@@ -40,10 +40,24 @@ function LoginSuspense() {
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsRegisterPending(true);
+  
     const form = new FormData(e.currentTarget as HTMLFormElement);
+    const password = form.get("password") as string;
+  
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  
+    if (!passwordRegex.test(password)) {
+      setRegisterErrorMessage(
+        "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character."
+      );
+      setIsRegisterPending(false);
+      return;
+    }
+  
     const response = await registerUser(undefined, form);
     setIsRegisterPending(false);
-
+  
     if (response.error) {
       setRegisterErrorMessage(response.message);
       setRegisterSuccessMessage("");
@@ -220,7 +234,7 @@ function LoginSuspense() {
                       <>
                         <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
                         <p className="text-sm text-red-500">
-                          {authErrorMessage}
+                        Invalid Credentials
                         </p>
                       </>
                     )}
