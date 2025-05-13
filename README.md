@@ -1,9 +1,9 @@
-# [Hostel Check-in](https://hostel-check-in-tau.vercel.app/login)
+# [Hostel Check-in](https://hostel-check-in.vercel.app/)
 
 ## Walkthrough video
 video walkthrough: https://drive.google.com/file/d/1yJ1B2DEhv8R5dskspjL5q7Qee4fnK7m7/view?usp=sharing
 
-### Deployed site: https://hostel-check-in-tau.vercel.app/
+### Deployed site: https://hostel-check-in.vercel.app/
 
 
 
@@ -39,7 +39,7 @@ WHEN A tenant checks out, I want to:
 - Display the returned deposit amount.
 
 ## Installation
-This application is deployed on [Vercel](https://hostel-check-in-tau.vercel.app/login).
+This application is deployed on [Vercel](https://hostel-check-in.vercel.app/).
 
 ## Demonstration
 <div style="margin-left: 40px;">
@@ -126,7 +126,13 @@ Chris:
 [GitHub](https://github.com/cjsquared-dev)
 
 ## Tests
-Fill
+
+Test Credentials:
+
+Username/email:  john@test.com
+Password: password123
+
+
 
 ## Questions
 Fill
