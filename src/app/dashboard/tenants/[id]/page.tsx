@@ -10,7 +10,7 @@ import { Button } from "react-day-picker";
 import { DayPickerProvider, DayPicker } from "react-day-picker";
 import { getTenantById, deleteTenant } from "@/actions/tenant.actions";
 import { mock } from "node:test";
-import { IBooking, IChangeLog, ILog, INote } from "@/lib/types/interfaces";
+import { IBooking, IChangeLog, ILog, INote, IPaymentMethod } from "@/lib/types/interfaces";
 import Link from "next/link";
 import TenantHeader from "@/components/TenantHeader";
 import { redirect } from "next/navigation";
@@ -39,6 +39,16 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     }
     redirect("/dashboard/tenants");
   }
+
+  const fieldLabelMap: { [key: string]: string } = {
+    paymentMethods: "Payment Method",
+    notes: "Note",
+    updatedBy: "Updated By",
+  };
+
+  console.log("Tenant:", tenant);
+  console.log("History:", history);
+console.log("Payment Method:", tenant.paymentMethods);
 
   return (
     <>
@@ -196,13 +206,40 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
                                 <ul>
                                   {logs.updates.map(
                                     (log: ILog, index: number) => {
+                                      // Extract the base field name (e.g., "paymentMethods" from "paymentMethods.0")
+                                      const baseFieldName = log.field.split(".")[0];
+                                      const fieldName = fieldLabelMap[baseFieldName] || baseFieldName;
+
+                                      // Handle array indices dynamically
+                                      const arrayIndex = log.field.includes(".")
+                                        ? ` #${log.field.split(".")[1]}`
+                                        : "";
+
+                                      // Handle nested fields (e.g., "notes.0.content")
+                                      const nestedField = log.field.split(".")[2]
+                                        ? ` (${log.field.split(".")[2]})`
+                                        : "";
+
+                                      // Resolve old and new values
+                                      const oldValue =
+                                        typeof log.oldValue === "object" && log.oldValue !== null && "method" in log.oldValue
+                                          ? (log.oldValue as { method: string }).method
+                                          : log.oldValue || "N/A";
+
+                                      const newValue =
+                                        typeof log.newValue === "object" && log.newValue !== null && "method" in log.newValue
+                                          ? (log.newValue as { method: string }).method
+                                          : log.newValue || "N/A";
+
+
+
                                       return (
                                         <li
                                           key={index}
                                           className={`ms-9 list-disc`}
                                         >
                                           <p>
-                                            <b>{String(log.field)}</b> was
+                                            <b>{String(fieldName)}</b> was
                                             updated from{" "}
                                             <i>{String(log.oldValue)}</i> to{" "}
                                             <i>{String(log.newValue)}</i>

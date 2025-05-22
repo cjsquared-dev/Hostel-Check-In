@@ -6,6 +6,7 @@ import { User } from "@/models/index";
 import { IUser } from "@/interfaces/index";
 import { IState } from "@/mytypes/index";
 import { redirect } from "next/navigation";
+import { IPaymentMethod } from "@/interfaces/index";
 
 // GET DATA
 
@@ -68,6 +69,13 @@ export async function getTenantById(id: string) {
       populate: {
         path: "updates",
         select: "field oldValue newValue",
+      },
+    })
+    .populate({
+      path: "paymentMethods",
+      populate: {
+        path: "method",
+        select: "methodName",
       },
     })
     .select(
