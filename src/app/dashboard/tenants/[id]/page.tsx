@@ -14,6 +14,7 @@ import { IBooking, IChangeLog, ILog, INote, IPaymentMethod } from "@/lib/types/i
 import Link from "next/link";
 import TenantHeader from "@/components/TenantHeader";
 import { redirect } from "next/navigation";
+import { log } from "console";
 
 // TODO: determine how to show an 'view' and 'edit' in the url e.g. /tenants/1/view or /tenants/1/edit
 // TODO: how can we have the edit and view pages be the same but the URL change upon state change?
@@ -48,7 +49,8 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
   console.log("Tenant:", tenant);
   console.log("History:", history);
-console.log("Payment Method:", tenant.paymentMethods);
+console.log("Payment Method:", tenant.paymentMethods.map((method: IPaymentMethod) => method.method));
+
 
   return (
     <>
@@ -231,7 +233,8 @@ console.log("Payment Method:", tenant.paymentMethods);
                                           ? (log.newValue as { method: string }).method
                                           : log.newValue || "N/A";
 
-
+                                              // Add this log to inspect values
+    console.log("Log field:", log.field, "oldValue:", log.oldValue, "newValue:", log.newValue);
 
                                       return (
                                         <li
@@ -241,8 +244,8 @@ console.log("Payment Method:", tenant.paymentMethods);
                                           <p>
                                             <b>{String(fieldName)}</b> was
                                             updated from{" "}
-                                            <i>{String(log.oldValue)}</i> to{" "}
-                                            <i>{String(log.newValue)}</i>
+                                            <i>{String(oldValue)}</i> to{" "}
+                                            <i>{String(newValue)}</i>
                                           </p>
                                         </li>
                                       );

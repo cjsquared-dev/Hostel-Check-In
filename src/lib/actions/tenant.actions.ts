@@ -7,6 +7,7 @@ import { IUser } from "@/interfaces/index";
 import { IState } from "@/mytypes/index";
 import { redirect } from "next/navigation";
 import { IPaymentMethod } from "@/interfaces/index";
+import mongoose from "mongoose";
 
 // GET DATA
 
@@ -57,19 +58,17 @@ export async function getTenantById(id: string) {
         },
       ],
     })
-    .populate({
+.populate({
       path: "history",
-      populate: {
-        path: "updatedBy",
-        select: "fullname",
-      },
-    })
-    .populate({
-      path: "history",
-      populate: {
-        path: "updates",
-        select: "field oldValue newValue",
-      },
+      populate: [
+        {
+          path: "updatedBy",
+          select: "fullname",
+        },
+        {
+          path: "updates",
+        },
+      ],
     })
     .populate({
       path: "paymentMethods",
@@ -86,6 +85,24 @@ export async function getTenantById(id: string) {
     console.log(id)
     console.log("Tenant not found, redirecting to /tenants");
     redirect("/tenants");
+  }
+
+  // Manually populate oldValue/newValue if they are valid ObjectIds
+  const PaymentMethod = mongoose.model("PaymentMethod");
+  for (const log of tenant.history || []) {
+    for (const update of log.updates || []) {
+      for (const key of ["oldValue", "newValue"]) {
+        const val = update[key];
+        if (
+          typeof val === "string" &&
+          mongoose.Types.ObjectId.isValid(val)
+        ) {
+          // Populate the payment method
+          const pm = await PaymentMethod.findById(val).select("method");
+          if (pm) update[key] = { method: pm.method };
+        }
+      }
+    }
   }
 
   const tenantObj = JSON.parse(JSON.stringify(tenant.toObject()));
